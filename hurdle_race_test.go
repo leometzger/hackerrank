@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-type TestCase struct {
+type HurdleRaceTestCase struct {
 	k      int32
 	height []int32
 	result int32
@@ -14,7 +14,7 @@ type TestCase struct {
 
 func TestHurdleRace(t *testing.T) {
 	assert := assert.New(t)
-	tests := []TestCase{
+	tests := []HurdleRaceTestCase{
 		{
 			int32(10),
 			[]int32{2, 3, 4, 5},
