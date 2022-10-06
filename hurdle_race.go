@@ -1,14 +1,8 @@
 package main
 
 /*
- * Complete the 'hurdleRace' function below.
- *
- * The function is expected to return an INTEGER.
- * The function accepts following parameters:
- *  1. INTEGER k
- *  2. INTEGER_ARRAY height
+ * https://www.hackerrank.com/challenges/the-hurdle-race/problem?h_r=internal-search
  */
-
 func HurdleRace(k int32, height []int32) int32 {
 	max := int32(0)
 
