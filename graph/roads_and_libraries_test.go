@@ -19,17 +19,6 @@ func TestRoadsAndLibraries(t *testing.T) {
 
 	tests := []RoadsAndLibrariesTestCase{
 		{
-			numCities: 3,
-			libCost:   2,
-			roadCost:  1,
-			cities: [][]int32{
-				{1, 2},
-				{3, 1},
-				{2, 3},
-			},
-			result: 4,
-		},
-		{
 			numCities: 6,
 			libCost:   2,
 			roadCost:  5,
@@ -42,6 +31,31 @@ func TestRoadsAndLibraries(t *testing.T) {
 				{5, 6},
 			},
 			result: 12,
+		},
+		{
+			numCities: 3,
+			libCost:   2,
+			roadCost:  1,
+			cities: [][]int32{
+				{1, 2},
+				{3, 1},
+				{2, 3},
+			},
+			result: 4,
+		},
+		{
+			numCities: 7,
+			libCost:   3,
+			roadCost:  2,
+			cities: [][]int32{
+				{1, 2},
+				{1, 3},
+				{2, 3},
+				{1, 4},
+				{5, 6},
+				{6, 7},
+			},
+			result: 16,
 		},
 	}
 
