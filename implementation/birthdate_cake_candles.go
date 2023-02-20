@@ -1,8 +1,6 @@
 package main
 
-/**
- * https://www.hackerrank.com/challenges/birthday-cake-candles/problem?isFullScreen=true
- */
+// https://www.hackerrank.com/challenges/birthday-cake-candles/problem?isFullScreen=true
 func BirthdateCakeCandles(candles []int32) int32 {
 	var counter int32 = 0
 	var tallest int32 = 0

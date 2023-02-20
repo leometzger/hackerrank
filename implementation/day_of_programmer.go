@@ -5,9 +5,7 @@ import "time"
 var resultFormat string = "02.01.2006"
 var programmerDayOfYear int = 256
 
-/*
- * https://www.hackerrank.com/challenges/day-of-the-programmer/problem?isFullScreen=true
- */
+// https://www.hackerrank.com/challenges/day-of-the-programmer/problem?isFullScreen=true
 func DayOfProgrammer(year int32) string {
 	isGregorianCalendar := year >= 1919
 	isLeapYear := year%4 == 0

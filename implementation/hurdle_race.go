@@ -1,8 +1,6 @@
 package main
 
-/*
- * https://www.hackerrank.com/challenges/the-hurdle-race/problem?h_r=internal-search
- */
+// https://www.hackerrank.com/challenges/the-hurdle-race/problem?h_r=internal-search
 func HurdleRace(k int32, height []int32) int32 {
 	max := int32(0)
 
