@@ -1,11 +1,11 @@
 package graph
 
-type Graph struct {
+type RoadsAndLibrariesGraph struct {
 	cities  [][]int32
 	visited map[int32]bool
 }
 
-func NewGraph(n int32, roads [][]int32) *Graph {
+func NewRoadsAndLibrariesGraph(n int32, roads [][]int32) *RoadsAndLibrariesGraph {
 	cities := [][]int32{}
 
 	for i := 0; int32(i) < n; i++ {
@@ -21,13 +21,13 @@ func NewGraph(n int32, roads [][]int32) *Graph {
 		cities[targetIndex] = append(cities[targetIndex], sourceIndex)
 	}
 
-	return &Graph{
+	return &RoadsAndLibrariesGraph{
 		cities:  cities,
 		visited: make(map[int32]bool),
 	}
 }
 
-func (g *Graph) dfs(v int32) {
+func (g *RoadsAndLibrariesGraph) dfs(v int32) {
 	g.visited[v] = true
 
 	for _, index := range g.cities[v] {
@@ -37,7 +37,7 @@ func (g *Graph) dfs(v int32) {
 	}
 }
 
-func (g *Graph) countSubgraphs(n int32) int32 {
+func (g *RoadsAndLibrariesGraph) countSubgraphs(n int32) int32 {
 	counter := 1
 	g.dfs(0)
 
@@ -57,7 +57,7 @@ func RoadsAndLibraries(numCities int32, libCost int32, roadCost int32, roads [][
 		return int64(numCities) * int64(libCost)
 	}
 
-	graph := NewGraph(numCities, roads)
+	graph := NewRoadsAndLibrariesGraph(numCities, roads)
 	subgraphCount := graph.countSubgraphs(numCities)
 
 	return int64(subgraphCount)*int64(libCost) + (int64(numCities)-int64(subgraphCount))*int64(roadCost)
