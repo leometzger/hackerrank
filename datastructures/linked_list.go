@@ -1,5 +1,10 @@
 package datastructures
 
+import (
+	"bufio"
+	"fmt"
+)
+
 type SinglyLinkedListNode struct {
 	data int32
 	next *SinglyLinkedListNode
@@ -23,4 +28,16 @@ func (singlyLinkedList *SinglyLinkedList) insertNodeIntoSinglyLinkedList(nodeDat
 	}
 
 	singlyLinkedList.tail = node
+}
+
+func printSinglyLinkedList(node *SinglyLinkedListNode, sep string, writer *bufio.Writer) {
+	for node != nil {
+		fmt.Fprintf(writer, "%d", node.data)
+
+		node = node.next
+
+		if node != nil {
+			fmt.Fprintf(writer, sep)
+		}
+	}
 }
