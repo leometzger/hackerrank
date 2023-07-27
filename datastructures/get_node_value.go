@@ -2,19 +2,20 @@
 
 package datastructures
 
-func getNode(node *SinglyLinkedListNode, positionFromTail int32) int32 {
+func getNode(head *SinglyLinkedListNode, positionFromTail int32) int32 {
 	length := 0
-	n := node.next
+	pointer := head
 
-	for n.next != nil {
+	for pointer != nil {
 		length++
-		n = n.next
+		pointer = pointer.next
 	}
 
-	n = node.next
-	for i := 0; i < length-int(positionFromTail)+1; i++ {
-		n = n.next
+	positionFromHead := length - (int(positionFromTail))
+	pointer = head
+	for i := 1; i < positionFromHead; i++ {
+		pointer = pointer.next
 	}
 
-	return n.data
+	return pointer.data
 }

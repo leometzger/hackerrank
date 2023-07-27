@@ -28,6 +28,7 @@ func createLinkedList(length int, desc bool) *SinglyLinkedList {
 
 func TestGetNodeValueSmallList(t *testing.T) {
 	assert := assert.New(t)
+	singleList := createLinkedList(1, true)
 	smallList := createLinkedList(4, true)
 	smallListDesc := createLinkedList(10, false)
 	bigList := createLinkedList(10000, false)
@@ -36,17 +37,22 @@ func TestGetNodeValueSmallList(t *testing.T) {
 		{
 			node:             smallList.head,
 			positionFromTail: 2,
-			result:           2,
+			result:           3,
 		},
 		{
 			node:             smallListDesc.head,
 			positionFromTail: 2,
-			result:           8,
+			result:           7,
 		},
 		{
 			node:             bigList.head,
 			positionFromTail: 4,
-			result:           9996,
+			result:           9995,
+		},
+		{
+			node:             singleList.head,
+			positionFromTail: 0,
+			result:           1,
 		},
 	}
 
