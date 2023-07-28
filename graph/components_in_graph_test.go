@@ -12,6 +12,12 @@ type ComponentsInGraphTestCase struct {
 }
 
 func TestComponentsInGraph(t *testing.T) {
+	generatedGb := [][]int32{}
+
+	for i := 15001; i <= 30000; i++ {
+		generatedGb = append(generatedGb, []int32{1, int32(i)})
+	}
+
 	tests := []ComponentsInGraphTestCase{
 		{
 			gb:     [][]int32{{1, 5}, {1, 6}, {2, 4}},
@@ -20,6 +26,10 @@ func TestComponentsInGraph(t *testing.T) {
 		{
 			gb:     [][]int32{{1, 6}, {2, 7}, {3, 8}, {4, 9}, {2, 6}},
 			result: []int32{2, 4},
+		},
+		{
+			gb:     generatedGb,
+			result: []int32{15001, 15001},
 		},
 	}
 
