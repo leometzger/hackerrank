@@ -2,29 +2,36 @@ package datastructures
 
 // https://www.hackerrank.com/challenges/equal-stacks/problem?isFullScreen=false
 
-type Stack struct {
+type EqualStacksStack struct {
 	items  []int32
 	height int32
 }
 
-func NewStack(items []int32) *Stack {
+func NewEqualStacksStack(items []int32) *EqualStacksStack {
+	var stackItems []int32
 	height := int32(0)
-	for _, val := range items {
-		height += val
+
+	for i := len(items) - 1; i >= 0; i-- {
+		height += items[i]
+		stackItems = append(stackItems, items[i])
 	}
 
-	return &Stack{
-		items:  items,
+	return &EqualStacksStack{
+		items:  stackItems,
 		height: height,
 	}
 }
 
-func (s *Stack) Pop() {
-
+func (s *EqualStacksStack) Pop() int32 {
+	length := len(s.items)
+	tmp := s.items[length-1]
+	s.items = s.items[:length-1]
+	s.height -= tmp
+	return tmp
 }
 
-// problema: O(N²)
-func Verify(stacks []*Stack) bool {
+// problem: O(N²) as it usually has low number of stacks it is kind of OK
+func verify(stacks []*EqualStacksStack) bool {
 	for i := 0; i < len(stacks); i++ {
 		for j := 0; j < len(stacks); j++ {
 			if stacks[i].height != stacks[j].height {
@@ -35,18 +42,33 @@ func Verify(stacks []*Stack) bool {
 	return true
 }
 
-func PopFromHighest(stacks []*Stack) {
+func popFromHeighest(stacks []*EqualStacksStack) {
+	heighest := stacks[0]
 
+	for i := 1; i < len(stacks); i++ {
+		if heighest.height < stacks[i].height {
+			heighest = stacks[i]
+		}
+	}
+	heighest.Pop()
 }
 
-func EqualStacks(h1 []int32, h2 []int32, h3 []int32) int32 {
-	var stacks []*Stack
+func equalStacks(h1 []int32, h2 []int32, h3 []int32) int32 {
+	var stacks []*EqualStacksStack
 
-	stack1 := NewStack(h1)
-	stack2 := NewStack(h2)
-	stack3 := NewStack(h3)
-
+	stack1 := NewEqualStacksStack(h1)
+	stack2 := NewEqualStacksStack(h2)
+	stack3 := NewEqualStacksStack(h3)
 	stacks = append(stacks, stack1, stack2, stack3)
 
-	return 0
+	for {
+		isEqual := verify(stacks)
+		if !isEqual {
+			popFromHeighest(stacks)
+		} else {
+			break
+		}
+	}
+
+	return stack1.height
 }
