@@ -1,4 +1,4 @@
-package main
+package implementation
 
 // https://www.hackerrank.com/challenges/episode-recording/problem?isFullScreen=true&h_r=next-challenge&h_v=zen
 

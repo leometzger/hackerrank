@@ -1,4 +1,4 @@
-package main
+package implementation
 
 // https://www.hackerrank.com/challenges/the-hurdle-race/problem?h_r=internal-search
 func HurdleRace(k int32, height []int32) int32 {
