@@ -53,9 +53,7 @@ func main() {
 	}
 
 	fmt.Println("Res", n, len(commands), len(params))
-
 	result := datastructures.MergingCommunities(n, commands, params)
-
 	fmt.Println("Res", n, len(commands), len(params), result)
 
 	for _, res := range result {

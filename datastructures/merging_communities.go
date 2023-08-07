@@ -8,12 +8,15 @@ type MergingCommunitiesSet struct {
 
 func (s *MergingCommunitiesSet) add(item int32) {
 	s.items[item] = item
-	s.rank[item] = 0
+	s.rank[item] = 1
 	s.counter[item] = 1
 }
 
 func (s *MergingCommunitiesSet) find(item int32) int32 {
-	return s.items[item]
+	if s.items[item] == item {
+		return item
+	}
+	return s.find(s.items[item])
 }
 
 func (s *MergingCommunitiesSet) union(i, j int32) {
@@ -31,13 +34,13 @@ func (s *MergingCommunitiesSet) union(i, j int32) {
 	} else if irank > jrank {
 		s.items[jrep] = irep
 	} else {
-		s.items[irep] = jrep
-		s.rank[jrep]++
+		s.items[jrep] = irep
+		s.rank[irep]++
 	}
 
 	counter := s.counter[irep] + s.counter[jrep]
-	s.counter[irep] = counter
 	s.counter[jrep] = counter
+	s.counter[irep] = counter
 }
 
 func (s *MergingCommunitiesSet) count(item int32) int32 {

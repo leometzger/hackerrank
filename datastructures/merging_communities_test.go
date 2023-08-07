@@ -2,6 +2,7 @@ package datastructures
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"os"
 	"strconv"
@@ -44,6 +45,7 @@ func TestMergingCommunities(t *testing.T) {
 
 	for _, test := range tests {
 		assert.Equal(t, test.result, MergingCommunities(test.n, test.commands, test.params))
+
 	}
 }
 
@@ -52,7 +54,12 @@ func TestMergingCommunitiesFiles(t *testing.T) {
 	expectedResult := getResultFromFile("./tests/mc04-result.txt")
 	result := MergingCommunities(n, commands, params)
 
-	assert.Equal(t, expectedResult, result)
+	for i := 0; i < len(result); i++ {
+		passed := assert.Equal(t, expectedResult[i], result[i], fmt.Sprintf("Error on %d", i))
+		if !passed {
+			break
+		}
+	}
 }
 
 func getFunctionArgsFromFile(filePath string) (int32, []string, [][]int32) {
