@@ -5,19 +5,16 @@ package datastructures
 type ContactsTrieNode struct {
 	isEndOfWord bool
 	char        string
+	counter     int32
 	children    map[rune]*ContactsTrieNode
 }
 
-func (node *ContactsTrieNode) countEndOfWords(currentCount int32) int32 {
-	if node.isEndOfWord {
-		currentCount += 1
-	}
+func (node *ContactsTrieNode) countEndOfWords() int32 {
+	return node.counter
+}
 
-	for _, subnode := range node.children {
-		currentCount += subnode.countEndOfWords(0)
-	}
-
-	return currentCount
+func (node *ContactsTrieNode) increment() {
+	node.counter++
 }
 
 type ContactsTrie struct {
@@ -26,15 +23,18 @@ type ContactsTrie struct {
 
 func (trie *ContactsTrie) add(item string) {
 	currentNode := trie.rootNode
+	currentNode.increment()
 
 	for index, c := range item {
 		if currentNode.children[c] != nil {
 			currentNode = currentNode.children[c]
+			currentNode.increment()
 		} else {
 			node := &ContactsTrieNode{
 				isEndOfWord: index == len(item)-1,
 				children:    make(map[rune]*ContactsTrieNode),
 				char:        string(c),
+				counter:     1,
 			}
 			currentNode.children[c] = node
 			currentNode = node
@@ -53,7 +53,7 @@ func (trie *ContactsTrie) countPrefix(prefix string) int32 {
 		node = node.children[c]
 	}
 
-	return node.countEndOfWords(0)
+	return node.countEndOfWords()
 }
 
 func contacts(queries [][]string) []int32 {
@@ -61,6 +61,7 @@ func contacts(queries [][]string) []int32 {
 	trie := &ContactsTrie{
 		rootNode: &ContactsTrieNode{
 			isEndOfWord: false,
+			counter:     0,
 			children:    make(map[rune]*ContactsTrieNode),
 		},
 	}
