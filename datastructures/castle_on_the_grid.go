@@ -1,5 +1,7 @@
 package datastructures
 
+import "math"
+
 type CastleOnGridQueue struct {
 	items []*CastleOnGridNode
 }
@@ -64,7 +66,7 @@ func createGraph(grid []string) [][]*CastleOnGridNode {
 			item := grid[i][j]
 
 			if item == 'X' {
-				break
+				continue
 			}
 
 			if item == '.' {
@@ -90,6 +92,10 @@ func createGraph(grid []string) [][]*CastleOnGridNode {
 }
 
 func minimumMoves(grid []string, startX int32, startY int32, goalX int32, goalY int32) int32 {
+	if startX == goalY && startY == goalY {
+		return 0
+	}
+
 	queue := &CastleOnGridQueue{}
 	nodesMatrix := createGraph(grid)
 	visited := make(map[*CastleOnGridNode]bool)
@@ -102,10 +108,11 @@ func minimumMoves(grid []string, startX int32, startY int32, goalX int32, goalY 
 		minMoves[i] = make([]int32, len(grid))
 
 		for j := 0; j < len(grid); j++ {
-			minMoves[i][j] = int32(len(grid) + 1)
+			minMoves[i][j] = math.MaxInt32
 		}
 	}
 
+	minMoves[startX][startY] = 0
 	for !queue.isEmpty() {
 		node := queue.dequeue()
 		if visited[node] {
@@ -114,8 +121,14 @@ func minimumMoves(grid []string, startX int32, startY int32, goalX int32, goalY 
 
 		for _, target := range node.edges {
 			queue.enqueue(target)
+			var min int32
 
-			min := minMoves[target.x][target.y] + 1
+			if minMoves[node.x][node.y] == math.MaxInt32 {
+				min = 1
+			} else {
+				min = minMoves[node.x][node.y] + 1
+			}
+
 			if min < minMoves[target.x][target.y] {
 				minMoves[target.x][target.y] = min
 			}
