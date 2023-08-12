@@ -28,6 +28,25 @@ func TestQueueUsingTwoStacks(t *testing.T) {
 				"2",
 			},
 		},
+		{
+			result: []int32{
+				33,
+				33,
+				33,
+			},
+			operations: []string{
+				"1 76",
+				"1 33",
+				"2",
+				"1 23",
+				"1 97",
+				"1 21",
+				"3",
+				"3",
+				"1 74",
+				"3",
+			},
+		},
 	}
 
 	for _, test := range tests {

@@ -11,9 +11,9 @@ type QueueUsingStacksStack struct {
 	items []int32
 }
 
-func (stack *QueueUsingStacksStack) push(value int32) {
-	stack.items = append(stack.items, value)
-}
+func (stack *QueueUsingStacksStack) push(value int32) { stack.items = append(stack.items, value) }
+func (stack *QueueUsingStacksStack) peek() int32      { return stack.items[len(stack.items)-1] }
+func (stack *QueueUsingStacksStack) isEmpty() bool    { return len(stack.items) == 0 }
 
 func (stack *QueueUsingStacksStack) pop() int32 {
 	n := len(stack.items)
@@ -26,62 +26,36 @@ func (stack *QueueUsingStacksStack) pop() int32 {
 	return res
 }
 
-func (stack *QueueUsingStacksStack) peek() int32 {
-	return stack.items[len(stack.items)-1]
-}
-
-func (stack *QueueUsingStacksStack) isEmpty() bool {
-	return len(stack.items) == 0
-}
-
 type QueueUsingStacksQueue struct {
-	active int
-	stack1 *QueueUsingStacksStack
-	stack2 *QueueUsingStacksStack
+	main *QueueUsingStacksStack
+	aux  *QueueUsingStacksStack
 }
 
 func NewQueueUsingStacksQueue() *QueueUsingStacksQueue {
 	return &QueueUsingStacksQueue{
-		active: 1,
-		stack1: &QueueUsingStacksStack{},
-		stack2: &QueueUsingStacksStack{},
-	}
-}
-
-func (queue *QueueUsingStacksQueue) enqueue(value int32) {
-	var source *QueueUsingStacksStack
-	var target *QueueUsingStacksStack
-
-	if queue.active == 1 {
-		source = queue.stack1
-		target = queue.stack2
-		queue.active = 2
-	} else {
-		source = queue.stack2
-		target = queue.stack1
-		queue.active = 1
-	}
-
-	source.push(value)
-	for !source.isEmpty() {
-		target.push(source.pop())
+		main: &QueueUsingStacksStack{},
+		aux:  &QueueUsingStacksStack{},
 	}
 }
 
 func (queue *QueueUsingStacksQueue) dequeue() int32 {
-	if queue.active == 1 {
-		return queue.stack1.pop()
-	} else {
-		return queue.stack2.pop()
+	if queue.aux.isEmpty() {
+		for !queue.main.isEmpty() {
+			queue.aux.push(queue.main.pop())
+		}
 	}
-}
 
+	return queue.aux.pop()
+}
+func (queue *QueueUsingStacksQueue) enqueue(value int32) { queue.main.push(value) }
 func (queue *QueueUsingStacksQueue) print() int32 {
-	if queue.active == 1 {
-		return queue.stack1.peek()
-	} else {
-		return queue.stack2.peek()
+	if queue.aux.isEmpty() {
+		for !queue.main.isEmpty() {
+			queue.aux.push(queue.main.pop())
+		}
 	}
+
+	return queue.aux.peek()
 }
 
 func queueUsingTwoStacks(operations []string) []int32 {
