@@ -69,16 +69,11 @@ func getFunctionArgsFromFile(filePath string) (int32, []string, [][]int32) {
 	checkError(err)
 	defer file.Close()
 
+	var n, q int32
 	reader := bufio.NewReader(file)
-	firstLine := strings.Split(strings.TrimSpace(readLine(reader)), " ")
 
-	nTemp, err := strconv.ParseInt(firstLine[0], 10, 64)
+	_, err = fmt.Fscanf(reader, "%d %d\n", &n, &q)
 	checkError(err)
-	n := int32(nTemp)
-
-	qTemp, err := strconv.ParseInt(firstLine[1], 10, 64)
-	checkError(err)
-	q := int32(qTemp)
 
 	for i := 0; i < int(q); i++ {
 		line := strings.Split(strings.TrimSpace(readLine(reader)), " ")

@@ -2,9 +2,9 @@ package implementation
 
 import (
 	"bufio"
+	"fmt"
+	"io"
 	"os"
-	"strconv"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -36,67 +36,56 @@ func TestClimbingTheLeaderboard(t *testing.T) {
 }
 
 func TestClimbingTheLeaderboardFiles(t *testing.T) {
-	ranked, player := readInput()
-	result := readOutput()
+	ranked, player := readInput("./tests/climbing-leaderboard-input.txt")
+	result := readOutput("./tests/climbing-leaderboard-output.txt")
 
 	assert.Equal(t, result, climbingLeaderboard(ranked, player))
 }
 
-func readInput() ([]int32, []int32) {
-	var ranked []int32
-	var players []int32
-
-	file, err := os.Open("./tests/climbing-leaderboard-input.txt")
+func readInput(filePath string) ([]int32, []int32) {
+	file, err := os.Open(filePath)
 	checkError(err)
 
 	reader := bufio.NewReader(file)
 
-	_, _, err = reader.ReadLine()
+	var n int
+	_, err = fmt.Fscanf(reader, "%d\n", &n)
 	checkError(err)
+	ranked := scanLine(reader, n)
 
-	line, _, err := reader.ReadLine()
+	var m int
+	_, err = fmt.Fscanf(reader, "%d\n", &m)
 	checkError(err)
-	valuesAsString := strings.Split(string(line), " ")
-
-	for _, value := range valuesAsString {
-		rank, err := strconv.ParseInt(value, 10, 32)
-		checkError(err)
-		ranked = append(ranked, int32(rank))
-	}
-
-	_, _, err = reader.ReadLine()
-	checkError(err)
-
-	line, _, err = reader.ReadLine()
-	checkError(err)
-	valuesAsString = strings.Split(string(line), " ")
-
-	for _, value := range valuesAsString {
-		player, err := strconv.ParseInt(string(value), 10, 32)
-		checkError(err)
-		players = append(players, int32(player))
-	}
+	players := scanLine(reader, m)
 
 	return ranked, players
 }
 
-func readOutput() []int32 {
+func scanLine(reader io.Reader, n int) []int32 {
+	items := make([]int32, n)
+	temp := make([]interface{}, n)
+	for i := 0; i < n; i++ {
+		temp[i] = &items[i]
+	}
+	_, err := fmt.Fscanln(reader, temp...)
+	checkError(err)
+	return items
+}
+
+func readOutput(filePath string) []int32 {
 	var result []int32
 
-	file, err := os.Open("./tests/climbing-leaderboard-output.txt")
+	file, err := os.Open(filePath)
 	checkError(err)
-
 	reader := bufio.NewReader(file)
 
 	for {
-		line, _, err := reader.ReadLine()
+		var res int
+		_, err = fmt.Fscanf(reader, "%d\n", &res)
 		if err != nil {
 			break
 		}
-
-		value, err := strconv.ParseInt(string(line), 10, 32)
-		checkError(err)
-		result = append(result, int32(value))
+		result = append(result, int32(res))
 	}
 
 	return result
