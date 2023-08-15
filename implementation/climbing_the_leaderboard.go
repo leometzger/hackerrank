@@ -1,61 +1,44 @@
 package implementation
 
-func searchIndex(ranked []int32, player int32, current int) int32 {
-	// is the first one
-	if ranked[0] < player {
-		return -1
-	}
+type Stack struct {
+	items []int32
+}
 
-	// is the last one
-	if ranked[len(ranked)-1] > player {
-		return int32(len(ranked) - 1)
-	}
+func (s *Stack) push(value int32) { s.items = append(s.items, value) }
+func (s *Stack) isEmpty() bool    { return len(s.items) == 0 }
+func (s *Stack) peek() int32      { return s.items[len(s.items)-1] }
 
-	// binary search
-	mid := len(ranked) / 2
-	for {
-		if ranked[mid] == player {
-			return int32(mid)
-		}
-
-		if ranked[mid] > player && ranked[mid+1] <= player { // found the middle guy
-			return int32(mid)
-		}
-
-		if ranked[mid] < player {
-			mid = mid / 2
-		} else {
-			mid = mid + mid/2
-		}
-	}
+func (s *Stack) pop() int32 {
+	result := s.items[len(s.items)-1]
+	s.items = s.items[0 : len(s.items)-1]
+	return result
 }
 
 func climbingLeaderboard(ranked []int32, players []int32) []int32 {
-	var result []int32
-	positions := make([]int32, len(ranked))
+	result := make([]int32, len(players))
+	resultIndex := len(players) - 1
+	currentPosition := int32(1)
 
-	counter := int32(1)
-	positions[0] = counter
-
-	for i := 1; i < len(ranked); i++ {
-		if ranked[i] == ranked[i-1] {
-			positions[i] = counter
-		} else {
-			counter++
-			positions[i] = counter
-		}
+	stack := &Stack{}
+	for _, item := range players {
+		stack.push(item)
 	}
 
-	for i := 0; i < len(players); i++ {
-		previous := searchIndex(ranked, players[i], len(ranked)/2)
-
-		if previous == -1 {
-			result = append(result, 1)
-		} else if ranked[previous] == players[i] {
-			result = append(result, positions[previous])
-		} else {
-			result = append(result, positions[previous]+1)
+	for i := 0; i < len(ranked); i++ {
+		if i > 0 && ranked[i-1] > ranked[i] {
+			currentPosition++
 		}
+
+		for !stack.isEmpty() && stack.peek() >= ranked[i] {
+			stack.pop()
+			result[resultIndex] = currentPosition
+			resultIndex--
+		}
+
+	}
+
+	for i := resultIndex; i >= 0; i-- {
+		result[i] = currentPosition + 1
 	}
 
 	return result

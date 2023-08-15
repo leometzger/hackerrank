@@ -1,6 +1,10 @@
 package implementation
 
 import (
+	"bufio"
+	"os"
+	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -31,4 +35,75 @@ func TestClimbingTheLeaderboard(t *testing.T) {
 	}
 }
 
-func TestClimbingTheLeaderboardFiles(t *testing.T) {}
+func TestClimbingTheLeaderboardFiles(t *testing.T) {
+	ranked, player := readInput()
+	result := readOutput()
+
+	assert.Equal(t, result, climbingLeaderboard(ranked, player))
+}
+
+func readInput() ([]int32, []int32) {
+	var ranked []int32
+	var players []int32
+
+	file, err := os.Open("./tests/climbing-leaderboard-input.txt")
+	checkError(err)
+
+	reader := bufio.NewReader(file)
+
+	_, _, err = reader.ReadLine()
+	checkError(err)
+
+	line, _, err := reader.ReadLine()
+	checkError(err)
+	valuesAsString := strings.Split(string(line), " ")
+
+	for _, value := range valuesAsString {
+		rank, err := strconv.ParseInt(value, 10, 32)
+		checkError(err)
+		ranked = append(ranked, int32(rank))
+	}
+
+	_, _, err = reader.ReadLine()
+	checkError(err)
+
+	line, _, err = reader.ReadLine()
+	checkError(err)
+	valuesAsString = strings.Split(string(line), " ")
+
+	for _, value := range valuesAsString {
+		player, err := strconv.ParseInt(string(value), 10, 32)
+		checkError(err)
+		players = append(players, int32(player))
+	}
+
+	return ranked, players
+}
+
+func readOutput() []int32 {
+	var result []int32
+
+	file, err := os.Open("./tests/climbing-leaderboard-output.txt")
+	checkError(err)
+
+	reader := bufio.NewReader(file)
+
+	for {
+		line, _, err := reader.ReadLine()
+		if err != nil {
+			break
+		}
+
+		value, err := strconv.ParseInt(string(line), 10, 32)
+		checkError(err)
+		result = append(result, int32(value))
+	}
+
+	return result
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
