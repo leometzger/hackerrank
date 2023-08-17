@@ -5,7 +5,7 @@ func checkLeft(root *TreeNode, maxAllowed int32) bool {
 		return true
 	}
 
-	if root.data > maxAllowed {
+	if root.data >= maxAllowed {
 		return false
 	}
 
@@ -17,7 +17,7 @@ func checkRight(root *TreeNode, minAllowed int32) bool {
 		return true
 	}
 
-	if root.data < minAllowed {
+	if root.data <= minAllowed {
 		return false
 	}
 
@@ -38,7 +38,7 @@ func checkBST(root *TreeNode) bool {
 	}
 
 	return checkLeft(root.left, root.data) &&
-		checkBST(root.left) &&
 		checkRight(root.right, root.data) &&
+		checkBST(root.left) &&
 		checkBST(root.right)
 }
