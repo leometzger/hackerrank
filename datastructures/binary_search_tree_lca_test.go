@@ -7,23 +7,23 @@ import (
 )
 
 type BinarySearchTreeLCATestCase struct {
-	root   *BSTNode
+	root   *TreeNode
 	v1     int32
 	v2     int32
 	result int32
 }
 
 func TestBinarySearchTreeLCA(t *testing.T) {
-	root := &BSTNode{
+	root := &TreeNode{
 		data: 4,
-		left: &BSTNode{
+		left: &TreeNode{
 			data:  2,
-			left:  &BSTNode{data: 1},
-			right: &BSTNode{data: 3},
+			left:  &TreeNode{data: 1},
+			right: &TreeNode{data: 3},
 		},
-		right: &BSTNode{
+		right: &TreeNode{
 			data: 7,
-			left: &BSTNode{data: 7},
+			left: &TreeNode{data: 7},
 		},
 	}
 

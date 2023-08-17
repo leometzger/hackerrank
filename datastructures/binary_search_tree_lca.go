@@ -2,13 +2,7 @@ package datastructures
 
 // https://www.hackerrank.com/challenges/binary-search-tree-lowest-common-ancestor/problem?isFullScreen=false
 
-type BSTNode struct {
-	data  int32
-	left  *BSTNode
-	right *BSTNode
-}
-
-func findPath(root *BSTNode, value int32, currentPath []int32) []int32 {
+func findPath(root *TreeNode, value int32, currentPath []int32) []int32 {
 	currentPath = append(currentPath, root.data)
 
 	if root.data == value {
@@ -22,7 +16,7 @@ func findPath(root *BSTNode, value int32, currentPath []int32) []int32 {
 	return findPath(root.left, value, currentPath)
 }
 
-func lca(root *BSTNode, v1 int32, v2 int32) int32 {
+func lca(root *TreeNode, v1 int32, v2 int32) int32 {
 	pathv1 := findPath(root, v1, []int32{})
 	pathv2 := findPath(root, v2, []int32{})
 
