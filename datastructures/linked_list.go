@@ -6,35 +6,35 @@ import (
 )
 
 type SinglyLinkedListNode struct {
-	data int32
-	next *SinglyLinkedListNode
+	Data int32
+	Next *SinglyLinkedListNode
 }
 
 type SinglyLinkedList struct {
-	head *SinglyLinkedListNode
-	tail *SinglyLinkedListNode
+	Head *SinglyLinkedListNode
+	Tail *SinglyLinkedListNode
 }
 
-func (singlyLinkedList *SinglyLinkedList) insertNodeIntoSinglyLinkedList(nodeData int32) {
+func (singlyLinkedList *SinglyLinkedList) InsertNodeIntoSinglyLinkedList(nodeData int32) {
 	node := &SinglyLinkedListNode{
-		next: nil,
-		data: nodeData,
+		Next: nil,
+		Data: nodeData,
 	}
 
-	if singlyLinkedList.head == nil {
-		singlyLinkedList.head = node
+	if singlyLinkedList.Head == nil {
+		singlyLinkedList.Head = node
 	} else {
-		singlyLinkedList.tail.next = node
+		singlyLinkedList.Tail.Next = node
 	}
 
-	singlyLinkedList.tail = node
+	singlyLinkedList.Tail = node
 }
 
-func printSinglyLinkedList(node *SinglyLinkedListNode, sep string, writer *bufio.Writer) {
+func PrintSinglyLinkedList(node *SinglyLinkedListNode, sep string, writer *bufio.Writer) {
 	for node != nil {
-		fmt.Fprintf(writer, "%d", node.data)
+		fmt.Fprintf(writer, "%d", node.Data)
 
-		node = node.next
+		node = node.Next
 
 		if node != nil {
 			fmt.Fprintf(writer, sep)

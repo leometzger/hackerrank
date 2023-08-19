@@ -5,26 +5,26 @@ package datastructures
 func insertNodeAtPosition(head *SinglyLinkedListNode, data int32, position int32) *SinglyLinkedListNode {
 	var pointer *SinglyLinkedListNode = head
 	count := 1
-	node := &SinglyLinkedListNode{data: data}
+	node := &SinglyLinkedListNode{Data: data}
 
 	if position == 0 {
-		node.next = head
+		node.Next = head
 		return node
 	}
 
-	for pointer.next != nil {
+	for pointer.Next != nil {
 		if count == int(position) {
-			previousNext := pointer.next
-			pointer.next = node
-			node.next = previousNext
+			previousNext := pointer.Next
+			pointer.Next = node
+			node.Next = previousNext
 			break
 		}
-		pointer = pointer.next
+		pointer = pointer.Next
 		count++
 	}
 
-	if pointer.next == nil {
-		pointer.next = node
+	if pointer.Next == nil {
+		pointer.Next = node
 	}
 
 	return head

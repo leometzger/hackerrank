@@ -16,11 +16,11 @@ func createLinkedList(length int, desc bool) *SinglyLinkedList {
 	list := SinglyLinkedList{}
 	if desc {
 		for i := length; i > 0; i-- {
-			list.insertNodeIntoSinglyLinkedList(int32(i))
+			list.InsertNodeIntoSinglyLinkedList(int32(i))
 		}
 	} else {
 		for i := 0; i < length; i++ {
-			list.insertNodeIntoSinglyLinkedList(int32(i))
+			list.InsertNodeIntoSinglyLinkedList(int32(i))
 		}
 	}
 	return &list
@@ -35,22 +35,22 @@ func TestGetNodeValueSmallList(t *testing.T) {
 
 	tests := []GetNodeTestCase{
 		{
-			node:             smallList.head,
+			node:             smallList.Head,
 			positionFromTail: 2,
 			result:           3,
 		},
 		{
-			node:             smallListDesc.head,
+			node:             smallListDesc.Head,
 			positionFromTail: 2,
 			result:           7,
 		},
 		{
-			node:             bigList.head,
+			node:             bigList.Head,
 			positionFromTail: 4,
 			result:           9995,
 		},
 		{
-			node:             singleList.head,
+			node:             singleList.Head,
 			positionFromTail: 0,
 			result:           1,
 		},

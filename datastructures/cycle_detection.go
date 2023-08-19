@@ -5,19 +5,19 @@
 package datastructures
 
 func DetectCycle(llist *SinglyLinkedList) bool {
-	if llist.head == nil {
+	if llist.Head == nil {
 		return false
 	}
 
 	cache := make(map[*SinglyLinkedListNode]bool)
-	pointer := llist.head
+	pointer := llist.Head
 
-	for pointer.next != nil {
+	for pointer.Next != nil {
 		if cache[pointer] {
 			return true
 		}
 		cache[pointer] = true
-		pointer = pointer.next
+		pointer = pointer.Next
 	}
 
 	return false

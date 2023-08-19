@@ -8,14 +8,14 @@ func getNode(head *SinglyLinkedListNode, positionFromTail int32) int32 {
 
 	for pointer != nil {
 		length++
-		pointer = pointer.next
+		pointer = pointer.Next
 	}
 
 	positionFromHead := length - (int(positionFromTail))
 	pointer = head
 	for i := 1; i < positionFromHead; i++ {
-		pointer = pointer.next
+		pointer = pointer.Next
 	}
 
-	return pointer.data
+	return pointer.Data
 }

@@ -14,7 +14,7 @@ func TestCycleDetectionWithEmptyLList(t *testing.T) {
 
 func TestCycleDetectionWithCycle(t *testing.T) {
 	llist := createInsertSpecificLinkedList(3, false)
-	llist.head.next.next = llist.head
+	llist.Head.Next.Next = llist.Head
 
 	assert.True(t, DetectCycle(llist))
 }
