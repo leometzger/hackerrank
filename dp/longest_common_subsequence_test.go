@@ -17,11 +17,16 @@ func TestLongestCommonSubsequence(t *testing.T) {
 		{
 			a:      []int32{1, 2, 3, 4, 1},
 			b:      []int32{3, 4, 1, 2, 1, 3},
-			result: []int32{1, 2, 3},
+			result: []int32{3, 4, 1},
+		},
+		{
+			a:      []int32{3, 9, 8, 3, 9, 7, 9, 7, 0},
+			b:      []int32{3, 3, 9, 9, 9, 1, 7, 2, 0, 6},
+			result: []int32{3, 3, 9, 9, 7, 0},
 		},
 	}
 
 	for _, test := range tests {
-		assert.Equal(t, int32(3), longestCommonSubsequence(test.a, test.b))
+		assert.Equal(t, test.result, longestCommonSubsequence(test.a, test.b))
 	}
 }
