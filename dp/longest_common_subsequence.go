@@ -1,21 +1,21 @@
 package dp
 
-func longestCommonSubsequence(x []int32, y []int32) []int32 {
+func longestCommonSubsequence(arr1 []int32, arr2 []int32) []int32 {
 	var result, temp []int32
-	memo := make([][]int32, len(x)+1)
+	memo := make([][]int32, len(arr1)+1)
 
-	for i := 0; i <= len(x); i++ {
-		memo[i] = make([]int32, len(y)+1)
+	for i := 0; i <= len(arr1); i++ {
+		memo[i] = make([]int32, len(arr2)+1)
 	}
 
-	for i := 0; i <= len(x); i++ {
-		for j := 0; j <= len(y); j++ {
+	for i := 0; i <= len(arr1); i++ {
+		for j := 0; j <= len(arr2); j++ {
 			if i == 0 || j == 0 {
 				memo[i][j] = 0
 				continue
 			}
 
-			if x[i-1] == y[j-1] {
+			if arr1[i-1] == arr2[j-1] {
 				memo[i][j] = 1 + memo[i-1][j-1]
 			} else {
 				memo[i][j] = max(memo[i-1][j], memo[i][j-1])
@@ -23,11 +23,11 @@ func longestCommonSubsequence(x []int32, y []int32) []int32 {
 		}
 	}
 
-	i := len(x)
-	j := len(y)
+	i := len(arr1)
+	j := len(arr2)
 	for i > 0 && j > 0 {
-		if x[i-1] == y[j-1] {
-			temp = append(temp, x[i-1])
+		if arr1[i-1] == arr2[j-1] {
+			temp = append(temp, arr1[i-1])
 			i--
 			j--
 		} else if memo[i-1][j] > memo[i][j-1] {
