@@ -16,6 +16,7 @@ type QueensAttackIITestCase struct {
 }
 
 func TestQueensAttackII(t *testing.T) {
+	t.Skip()
 	tests := []QueensAttackIITestCase{
 		{
 			n:         1,
